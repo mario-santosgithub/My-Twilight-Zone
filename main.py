@@ -2,6 +2,7 @@ from Strings import *
 from User import *
 from Fakebook import *
 from Post import *
+from Comment import *
 import operator
 
 fakebook = Fakebook()
@@ -28,6 +29,8 @@ def main():
             userPosts(arguments)
         elif command == COMMENT:
             comment(arguments)
+        elif command == READPOST:
+            readPost(arguments)
 
         else:
             print(MSG_UNKNOWN)
@@ -331,6 +334,9 @@ def comment(arguments):
         print("{} has no post {}!".format(userId2, postId))
         return
 
+    post = postList[postId-1]
+
+
     hasAccess = False
     friends2 = user2.getFriends()
     friends2.append(user2) # o user2 pode comentar no seu proprio post
@@ -342,30 +348,88 @@ def comment(arguments):
         print("{} has no access to post {} by {}!".format(userId1, postId, userId2))
         return 
 
-    if user1.getUserKind().upper() == "SELFCENTERED" and user1 == user2:
+    if user1.getUserKind().upper() == "SELFCENTERED" and user1 != user2:
         print(userId1 + " cannot comment on this post!")
         return
-
     
     postStance = post.getStance()
+    postHashTags = post.getHashtags()
 
+    if user1.getUserKind().upper() == "FANATIC":
+        lovesHates = user1.getLovesHates()
+        for h in postHashTags:
+            for entry in lovesHates:
+                if h == entry[1] and entry[0].upper() == "LOVES":
+                    fanaticism = 1 # positive
+                    break
+                elif h == entry[1] and entry[0].upper() == "HATES":
+                    fanaticism = 0 #negative
+                    break
+            break
+        
+        if (fanaticism == 1 and commentStance == "positive") or (fanaticism == 0 and commentStance == "negative"):
+            if postStance == "honest":
+                canComment = True
+            else:
+                canComment = False
+        elif (fanaticism == 0 and postStance == "fake") or (fanaticism == 1 and postStance == "honest"):
+            if commentStance == "positive":
+                canComment = True
+            else:
+                canComment = False
+        else:
+            if fanaticism == 1:
+                canComment = True
+            else:
+                canComment = False
 
+        if canComment == False:
+            print("Invalid comment stance!")
+            return
 
+    comment = Comment(user1, commentStance, message)
+    post.addComment(comment)
+    user1.addComment(comment)
+    print("Comment added!")
 
+def readPost(arguments):
 
+    userId = ""
+    for i in range(1, len(arguments)):
+        userId += arguments[i] + " "
+    userId = userId[:-1]
+    exists = False
 
+    users = fakebook.getUsers()
+    for u in users:
+        if userId == u.getId():
+            user = u
+            exists = True
 
+    postId = int(input())
+    posts = user.getPosts()
 
+    if exists == False:
+        print(userId + " does not exist!")
+        return
+    if postId > len(posts):
+        print(userId+ "has no post " + postId + "!")
+        return
 
+    post = posts[postId-1]
+    
+    message = post.getMessage()
+    comments = post.getComments()
+    print("[{}] {}".format(userId, message))
 
+    if comments == []:
+        print("No comments!")
+        return
 
-
-
-
-
-
-
-
-
+    for comment in comments:
+        userc = comment.getUser()
+        userIdc = userc.getId()
+        messagec = comment.getMessage()
+        print("[{}] {}".format(userIdc, messagec))
 
 main()
