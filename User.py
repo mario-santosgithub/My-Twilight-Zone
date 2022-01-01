@@ -28,6 +28,9 @@ class User(object):
     def addPost(self, post):
         self.posts.append(post)
 
+    def addComment(self, comment):
+        self.comments.append(comment)
+
 
 class Fanatic(User):
 
@@ -59,6 +62,9 @@ class Fanatic(User):
     def getLovesHates(self):
         return self.lovesHates
 
+    def addComment(self, comment):
+        super().addComment(comment)
+        
 
 
 
@@ -87,6 +93,9 @@ class Naive(User):
 
     def addPost(self, post):
         super().addPost(post)
+
+    def addComment(self, comment):
+        super().addComment(comment)
     
 class SelfCentered(User):
 
@@ -113,3 +122,6 @@ class SelfCentered(User):
 
     def addPost(self, post):
         super().addPost(post)
+
+    def addComment(self, comment):
+        super().addComment(comment)
