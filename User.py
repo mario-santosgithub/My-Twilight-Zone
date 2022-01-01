@@ -31,10 +31,9 @@ class User(object):
 
 class Fanatic(User):
 
-    def __init__(self, userId, userKind, loves, hates):
+    def __init__(self, userId, userKind, lovesHates):
+        self.lovesHates = lovesHates
         super().__init__(userId, userKind)
-        self.loves = loves
-        self.hates = hates
 
     def getId(self):
         return super().getId()
@@ -57,11 +56,9 @@ class Fanatic(User):
     def addPost(self, post):
         super().addPost(post)
 
-    def getLoves(self):
-        return self.loves
-    
-    def getHates(self):
-        return self.hates
+    def getLovesHates(self):
+        return self.lovesHates
+
 
 
 
