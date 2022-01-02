@@ -24,6 +24,13 @@ def main():
             comment_io(fakebook, arguments)
         elif command == READPOST:
             read_post_io(fakebook, arguments)
+        elif command == COMMENTSBYUSER:
+            comments_by_user_io(fakebook, arguments)
+        elif command == TOPICFANATICS:
+            topic_fanatic_io(fakebook, arguments)
+        elif command == TOPICPOSTS:
+            topic_posts_io(fakebook, arguments)
+
         else:
             print(MSG_UNKNOWN)
 
@@ -92,5 +99,15 @@ def comment_io(fakebook, args):
 
 def read_post_io(fakebook, args):
     fakebook.readPost(args)
+
+def comments_by_user_io(fakebook, args):
+    fakebook.commentsByUser(args)
+
+def topic_fanatic_io(fakebook, args):
+    fakebook.topicFanatic(args)
+
+def topic_posts_io(fakebook, args):
+    fakebook.topicPosts(args)
+
 
 main()
