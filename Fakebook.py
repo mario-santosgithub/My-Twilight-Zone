@@ -178,7 +178,8 @@ class Fakebook:
                     print("inadequate stance!")
                     return
 
-        post = Post(user, hashtags, stance, message)
+        postId = len(user.getPosts()) + 1
+        post = Post(user, hashtags, stance, postId, message)
         self.posts.append(post)
         user.addPost(post)
         friends = user.getFriends()
@@ -342,6 +343,78 @@ class Fakebook:
             messagec = comment.getMessage()
             print("[{}] {}".format(user_name_c, messagec))
 
+    def commentsByUser(self, args):
+
+        user_name = ' '.join(args)
+        exists = False
+        topicId = input()
+
+        for u in self.users:
+            if user_name == u.getUserName():
+                user = u
+                exists = True
+
+        if exists == False:
+            print(user_name + "does not exist!")
+            return
+
+        userComments = user.getComments()
+
+        if userComments == []:
+            print("No comments!")
+            return
+
+        for comment in userComments:
+            for post in self.posts:
+                if comment in post.getComments() and topicId in post.getHashtags():
+                    postAuthor = post.getUser()
+                    author_name = postAuthor.getUserName()
+                    postStance = post.getStance()
+                    postId = post.getId()
+
+                    print("[{} {} {} {}] {}".format(author_name, postStance, postId, comment.getStance(), comment.getMessage()))
+
+
+    def topicFanatic(self, args):
+        topic = args[0]
+
+        fanatics = []
+        for user in self.users:
+            if user.getTypeUser() == "fanatic":
+                lovesHates = user.getLovesHates()
+                for entry in lovesHates:
+                    if entry[1] == topic:
+                        fanatics.append(user.getUserName())
+
+
+        if fanatics == []:
+            print("Oh please, who would be a fanatic of " + topic + "?")
+            return
+
+        print(', '.join(fanatics) + ".")
+
+
+    def topicPosts(self, args):
+        topic = args[0]
+
+        posts = []
+        for post in self.posts:
+            hashtags = post.getHashtags()
+            if topic in hashtags:
+                posts.append(post)
+
+        if posts == []:
+            print("Oh please, who would write about " + topic)
+            return
+
+        for post in posts:
+            user = post.getUser()
+            user_name = user.getUserName()
+            postId = post.getId()
+            comments = len(post.getComments())
+            message = post.getMessage()
+
+            print("{} {} {}: {}".format(user_name, postId, comments, message))
 
 
     def addUser(self, user):
