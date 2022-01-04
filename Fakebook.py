@@ -271,6 +271,7 @@ class Fakebook:
         postHashTags = post.getHashtags()
 
         if user1.getTypeUser() == "fanatic":
+            fanaticism = None
             lovesHates = user1.getLovesHates()
             for h in postHashTags:
                 for entry in lovesHates:
@@ -280,8 +281,9 @@ class Fakebook:
                     elif h == entry[1] and entry[0] == "hates":
                         fanaticism = 0 #negative
                         break
-                break
-        
+                if fanaticism != None:
+                    break
+
             if (fanaticism == 1 and commentStance == "positive") or (fanaticism == 0 and commentStance == "negative"):
                 if postStance == "honest":
                     canComment = True
