@@ -213,7 +213,7 @@ class Fakebook:
             numberComments = len(post.getComments())
 
             print("{}. [{}] {} [{} comments]".format(counter, stance, message, numberComments))
-
+            counter += 1
 
     def commentPost(self, args):
         user_name1 = ' '.join(args)
@@ -253,7 +253,9 @@ class Fakebook:
 
         hasAccess = False
         friends2 = user2.getFriends()
-        friends2.append(user2) # user 2 pode comentar no eu proprio post
+
+        if user1 == user2:
+            hasAccess = True
 
         for u in friends2:
             if user1 == u:
@@ -333,7 +335,8 @@ class Fakebook:
 
         message = post.getMessage()
         comments = post.getComments()
-        print("[{}] {}".format(user_name, message))
+        postStance = post.getStance()
+        print("[{} {}] {}".format(user_name, postStance, message))
 
         if comments == []:
             print("No comments!")
@@ -341,9 +344,10 @@ class Fakebook:
 
         for comment in comments:
             userc = comment.getUser()
+            commentStance = comment.getStance()
             user_name_c = userc.getUserName()
             messagec = comment.getMessage()
-            print("[{}] {}".format(user_name_c, messagec))
+            print("[{} {}] {}".format(user_name_c, commentStance, messagec))
 
     def commentsByUser(self, args):
 
