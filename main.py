@@ -1,6 +1,6 @@
 from Fakebook import *
 
-
+import time
 def main():
     fakebook = Fakebook()
     command, arguments = next_command()
@@ -33,21 +33,13 @@ def main():
 
         else:
             print(MSG_UNKNOWN)
-
+        
         command, arguments = next_command()
 
     print(BYE_MSG)
     
     
 def next_command():
-    """
-    next_command(): . -> str x list[str]
-    Description: LÃª do input uma linha com o comando e argumentos.
-    Exemplos: 
-        next_command() -> 'register', ['naive', 'Forrest', 'Gump']
-        next_command() -> 'users', []
-        next_command() -> 'friends', ['Big', 'Bad', 'Wolf']
-    """
     user_input = input().split(" ")
     command = user_input[0].lower()
     args = user_input[1:]
@@ -55,6 +47,7 @@ def next_command():
       
 def help():
     print(REGISTER.lower() + " - " + MSG_REGISTER)
+    print(USERS.lower() + " - " + MSG_USERS)
     print(ADDFRIEND.lower() + " - " + MSG_ADDFRIEND)
     print(FRIENDS.lower() + " - " + MSG_FRIENDS)
     print(POST.lower() + " - " + MSG_POST)
@@ -75,7 +68,7 @@ def register_user_io(fakebook, args):
 
     type_user = args[0]
     if type_user not in ["naive", "fanatic", "selfcentered"]:
-        print(userKind.lower() + " is an invalid user kind!")
+        print(type_user.lower() + " is an invalid user kind!")
     else:
         fakebook.register_user(args)
 
