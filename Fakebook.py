@@ -126,6 +126,7 @@ class Fakebook:
 
         if exists == False:
             print(user_name + " does not exist!")
+            return
 
         if len(user.getFriends()) == 0:
             print(user_name + " has no friends!")
@@ -175,7 +176,14 @@ class Fakebook:
             lovesHates = user.getLovesHates()
             for entry in lovesHates:
                 if entry[0] == "hates" and entry[1] in hashtags:
-                    print("inadequate stance!")
+                    print("Inadequate stance!")
+                    return
+
+        if user.getTypeUser() == "fanatic" and stance == "fake":
+            lovesHates = user.getLovesHates()
+            for entry in lovesHates:
+                if entry[0] == "loves" and entry[1] in hashtags:
+                    print("Inadequate stance!")
                     return
 
         postId = len(user.getPosts()) + 1
@@ -246,7 +254,7 @@ class Fakebook:
         postList = user2.getPosts()
 
         if postId > len(postList):
-            print("{} has no post {}!".format(user_name1, postId))
+            print("{} has no post {}!".format(user_name2, postId))
             return
 
         post = postList[postId-1]
@@ -316,19 +324,23 @@ class Fakebook:
         user_name = ' '.join(args)
         exists = False
 
+        postIdStr = input()
+
         for u in self.users:
             if user_name == u.getUserName():
                 user = u
                 exists = True
 
-        postId = int(input())
-        posts = user.getPosts()
-
         if exists == False:
             print(user_name + " does not exist!")
             return
-        if postId > len(posts):
-            print(user_name + " has no post " + postId + "!")
+
+        
+        postId = int(postIdStr)
+        posts = user.getPosts()
+
+        if postId > len(posts) or postId <= 0:
+            print(user_name + " has no post " + postIdStr + "!")
             return
 
         post = posts[postId-1]
@@ -361,7 +373,7 @@ class Fakebook:
                 exists = True
 
         if exists == False:
-            print(user_name + "does not exist!")
+            print(user_name + " does not exist!")
             return
 
         userComments = user.getComments()
@@ -370,15 +382,22 @@ class Fakebook:
             print("No comments!")
             return
 
+        counter = 0
         for comment in userComments:
             for post in self.posts:
                 if comment in post.getComments() and topicId in post.getHashtags():
+                    counter +=1
                     postAuthor = post.getUser()
                     author_name = postAuthor.getUserName()
                     postStance = post.getStance()
                     postId = post.getId()
 
                     print("[{} {} {} {}] {}".format(author_name, postStance, postId, comment.getStance(), comment.getMessage()))
+
+        if counter == 0:
+            print("No comments!")
+            return
+
 
 
     def topicFanatic(self, args):
@@ -392,7 +411,7 @@ class Fakebook:
                     if entry[1] == topic:
                         fanatics.append(user.getUserName())
 
-
+        fanatics.sort()
         if fanatics == []:
             print("Oh please, who would be a fanatic of " + topic + "?")
             return
@@ -412,6 +431,7 @@ class Fakebook:
         if posts == []:
             print("Oh please, who would write about " + topic)
             return
+
 
         for post in posts:
             user = post.getUser()
