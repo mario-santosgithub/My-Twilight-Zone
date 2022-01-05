@@ -432,8 +432,6 @@ class Fakebook:
             print("Oh please, who would write about " + topic + "?")
             return
 
-        posts.sort(key=operator.attrgetter("commentsNumber"), reverse=True)
-
         for post in posts:
             user = post.getUser()
             user_name = user.getUserName()
