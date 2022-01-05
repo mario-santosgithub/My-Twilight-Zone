@@ -7,6 +7,7 @@ class Post:
         self.message = message
         self.postId = postId
         self.comments = []
+        self.commentsNumber = len(self.comments)
 
     def getUser(self):
         return self.user
@@ -28,3 +29,6 @@ class Post:
 
     def addComment(self, comment):
         self.comments.append(comment)
+
+    def getCommentsNumber(self):
+        return self.commentsNumber
