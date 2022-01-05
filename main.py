@@ -1,6 +1,5 @@
 from Fakebook import *
 
-import time
 def main():
     fakebook = Fakebook()
     command, arguments = next_command()
