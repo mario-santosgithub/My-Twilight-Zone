@@ -429,9 +429,10 @@ class Fakebook:
                 posts.append(post)
 
         if posts == []:
-            print("Oh please, who would write about " + topic)
+            print("Oh please, who would write about " + topic + "?")
             return
 
+        posts.sort(key=operator.attrgetter("commentsNumber"), reverse=True)
 
         for post in posts:
             user = post.getUser()
