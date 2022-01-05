@@ -432,6 +432,7 @@ class Fakebook:
             print("Oh please, who would write about " + topic + "?")
             return
 
+
         for post in posts:
             user = post.getUser()
             user_name = user.getUserName()
