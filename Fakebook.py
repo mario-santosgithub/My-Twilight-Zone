@@ -1,12 +1,19 @@
-from Strings import *
-from User import *
-from Post import *
-from Comment import *
-import operator
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec 17 11:59:58 2021
 
+@author: Madalena Custódio - 63128, Mariana Pereira - 62968, Rafaela Reis - 63040
+"""
+
+from naive_users import Naive_user
+from fanatic_users import Fanatic_user
+from selfcentered_users import Selfcentered_user
+from posts import Post
+from comments import Comment
+import operator
+from operator import itemgetter
 
 class Fakebook:
-
     def __init__(self):
         self.users = []
         self.posts = []
@@ -54,16 +61,17 @@ class Fakebook:
                             print("Invalid fanaticism list!")
                             return
                 
-                user = Fanatic(user_name, type_user, lovesHates)
+                user = Fanatic_user(user_name, type_user, lovesHates)
 
             elif type_user == "naive":
-                user = Naive(user_name, type_user)
+                user = Naive_user(user_name, type_user)
             else:
-                user = SelfCentered(user_name, type_user)
+                user = Selfcentered_user(user_name, type_user)
 
             self.users.append(user)
             print(user_name + " registered.")
-
+            
+        
     def showUsers(self):
         self.users.sort(key=operator.attrgetter("user_name"))
 
@@ -79,7 +87,7 @@ class Fakebook:
                 commentsCount = len(user.getComments())
 
                 print("{} [{}] {} {} {}".format(user_name, type_user, friendsCount, postsCount, commentsCount))
-
+                
     def add_friend(self, args):
 
         user_name1 = ' '.join(args)
@@ -113,7 +121,7 @@ class Fakebook:
         user2.addFriend(user1)
         print(user_name1 + " is friend of " + user_name2 + ".")
         return
-
+    
     def showFriends(self, args):
         
         user_name = ' '.join(args)
@@ -214,7 +222,7 @@ class Fakebook:
             return
 
         counter = 1
-        print(user_name + " posts: ")
+        print(user_name + " posts:")
         for post in posts:
             stance = post.getStance()
             message = post.getMessage()
@@ -424,23 +432,34 @@ class Fakebook:
 
         posts = []
         for post in self.posts:
+            p = []
             hashtags = post.getHashtags()
             if topic in hashtags:
-                posts.append(post)
+                postUser = post.getUser()
+                user_name = postUser.getUserName()
+                postId = post.getId()
+                postCommentsNumber = post.getCommentsNumber()
+                postMessage = post.getMessage()
+
+                p.append([user_name])
+                p.append([postId])
+                p.append([postCommentsNumber])
+                p.append([postMessage])
+                
+                posts.append(p)
 
         if posts == []:
             print("Oh please, who would write about " + topic + "?")
             return
 
 
-        for post in posts:
-            user = post.getUser()
-            user_name = user.getUserName()
-            postId = post.getId()
-            comments = len(post.getComments())
-            message = post.getMessage()
+        posts.sort(key=itemgetter(1))
+        posts.sort(key=itemgetter(0))
+        posts.sort(key=itemgetter(2))
 
-            print("{} {} {}: {}".format(user_name, postId, comments, message))
+        for post in posts:
+
+            print("{} {} {}: {}".format(post[0][0], post[1][0], post[2][0], post[3][0]))
 
 
     def addUser(self, user):
