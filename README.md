@@ -4,7 +4,7 @@ Project that simulates a social network like facebook
 Called Fakebook to avoid Copyrights :P
 _______________________________________________________________________________
 
-Here are the commands:
+Here are the commands: (Display the source text)
 
 - Exit:
   Exits the program.
