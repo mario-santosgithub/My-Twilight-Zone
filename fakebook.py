@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 17 11:59:58 2021
-
-@author: Madalena Custódio - 63128, Mariana Pereira - 62968, Rafaela Reis - 63040
-"""
-
 from naive_users import Naive_user
 from fanatic_users import Fanatic_user
 from selfcentered_users import Selfcentered_user
