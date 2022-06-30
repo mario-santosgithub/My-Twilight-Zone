@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 10 12:16:11 2021
-
-@author: Madalena Custódio - 63128, Mariana Pereira - 62968, Rafaela Reis - 63040
-"""
 
 #Comandos
 EXIT = "exit"
