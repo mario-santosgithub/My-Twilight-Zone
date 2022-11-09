@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 17 12:04:49 2021
-
-@author: Madalena Custódio - 63128, Mariana Pereira - 62968, Rafaela Reis - 63040
-"""
-
 class Selfcentered_user:
     def __init__(self, user_name, type_user):
         self.user_name = user_name
