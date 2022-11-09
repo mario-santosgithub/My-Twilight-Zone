@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Dec 23 12:31:52 2021
-
-@author: Madalena Custódio - 63128, Mariana Pereira - 62968, Rafaela Reis - 63040
-"""
-
 class Post:
     def __init__(self, user, hashtags, stance, postId, message):
         self.user = user
