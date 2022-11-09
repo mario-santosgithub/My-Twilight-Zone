@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 17 12:04:48 2021
-
-@author: Madalena Custódio - 63128, Mariana Pereira - 62968, Rafaela Reis - 63040
-"""
-
-
 class Fanatic_user:
     def __init__(self, user_name, type_user, lovesHates):
         self.user_name = user_name
